@@ -30,8 +30,8 @@ export function updateTable(parsedResponse: ResponseStore) {
 }
 
 // Create a new Spot instance
-const url = new URL('http://localhost:8055');
-const sites = ['david-scholz-dev'];
+const url = new URL('');
+const sites = [''];
 const spot = new Spot(url, sites);
 
 const payload = JSON.stringify({ payload: "SELECT_TABLES" });
