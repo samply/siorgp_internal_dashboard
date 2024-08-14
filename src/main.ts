@@ -10,12 +10,14 @@ export function updateTable(parsedResponse: ResponseStore) {
   // Extract the response details from the parsed response
   const responseDetails = parsedResponse.response.data?.responseDetails;
 
+  //@todo: include 'site' into ResponseDetails
   // Transform the response details into an array of type siteDataArray
   const transformedData: siteDataArray = responseDetails?.map((detail) => [
+    parsedResponse.site,
     detail.patId,
     detail.organoidId,
     detail.therapy.toString(),
-    detail.therapyType,
+    detail.therapyType
   ]) ?? [];
   
   if (siteData.length == 0) {
@@ -53,7 +55,7 @@ function renderTable(siteData: siteDataArray) {
   if (tableElement) {
     tableElement.innerHTML = '';
     grid = new Grid({
-      columns: ["Pat.ID", "Organoid.ID", "Therapy", "Type of Therapy"],
+      columns: ["Site", "Pat.ID", "Organoid.ID", "Therapy", "Type of Therapy"],
       data: siteData,
       sort: true,
       pagination: {
