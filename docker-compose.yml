@@ -51,7 +51,8 @@ services:
     build: .
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.lens.rule=Host(`${GUI_HOST}`)"
+      # - "traefik.http.routers.lens.rule=Host(`${GUI_HOST}`)"
+      - "traefik.http.routers.lens.rule=Host(`${GUI_HOST}`) && PathPrefix(`/internal/`)"
       - "traefik.http.routers.lens.tls=true"
       - "traefik.http.routers.lens.middlewares=traefik-forward-auth"
 
