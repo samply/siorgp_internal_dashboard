@@ -51,7 +51,8 @@ module.exports = {
   plugins: [
     new CopyPlugin({
       patterns: [
-        { from: 'public', to: 'images' },
+        { from: 'public/images', to: 'images' },
+        { from: 'public/fonts', to: 'fonts' },
         { from: 'src/index.html', to: '' },
         { from: 'src/ccp.css', to: '' },
       ],

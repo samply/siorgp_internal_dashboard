@@ -1,4 +1,10 @@
-import { Spot, ResponseStore, Response, ResponseBody, ResponseDetails } from './spot';
+import {
+  Spot,
+  ResponseStore,
+  Response,
+  ResponseBody,
+  ResponseDetails,
+} from "./spot";
 import { Grid } from "gridjs";
 
 type siteDataArray = string[][];
@@ -12,25 +18,33 @@ export function updateTable(parsedResponse: ResponseStore) {
 
   //@todo: include 'site' into ResponseDetails
   // Transform the response details into an array of type siteDataArray
-  const transformedData: siteDataArray = responseDetails?.map((detail) => [
-    parsedResponse.site,
-    detail.patId,
-    detail.organoidId,
-    detail.therapy.toString(),
-    detail.therapyType
-  ]) ?? [];
-  
+  const transformedData: siteDataArray =
+    responseDetails?.map((detail) => [
+      parsedResponse.site,
+      detail.project,
+      detail.patId,
+      detail.organoidId,
+      detail.localisationPt,
+      detail.classificationPt,
+      detail.sampleType,
+      detail.therapyPt.toString(),
+      detail.therapyTypePt,
+      detail.therapyM.toString(),
+      detail.typeTherapyM,
+    ]) ?? [];
+
   if (siteData.length == 0) {
     siteData = transformedData;
-    renderTable(siteData);  
-  } else if (siteData.length > 0 && grid){
+    renderTable(siteData);
+  } else if (siteData.length > 0 && grid) {
     siteData = siteData.concat(transformedData);
     grid.updateConfig({
-      data: siteData
+      data: siteData,
     });
-  }  
+  }
 }
 
+/*
 // Create a new Spot instance
 const url = new URL('');
 const sites = [''];
@@ -48,18 +62,30 @@ spot.send(query, controller).then(() => {
 }).catch((err) => {
   console.error('Error sending query:', err);
 });
-
+*/
 
 function renderTable(siteData: siteDataArray) {
   const tableElement = document.getElementById("table");
   if (tableElement) {
-    tableElement.innerHTML = '';
+    tableElement.innerHTML = "";
     grid = new Grid({
-      columns: ["Site", "Pat.ID", "Organoid.ID", "Therapy", "Type of Therapy"],
+      columns: [
+        "Site",
+        "Project",
+        "Pat.ID",
+        "Organoid.ID",
+        "Localisation Primary Tumor",
+        "TNM",
+        "Sample Type",
+        "Therapy primary Tumor",
+        "Type of Therapy (primary Tumor)",
+        "Therapy Metastasis",
+        "Type of Therapy (Metastases)",
+      ],
       data: siteData,
       sort: true,
       pagination: {
-        limit: 30
+        limit: 30,
       },
       search: true,
     }).render(tableElement);
@@ -72,33 +98,63 @@ function renderTable(siteData: siteDataArray) {
 // spot.send will call this function internally when it receives new data
 // but you can also call it manually for testing purposes
 const exampleParsedResponse: ResponseStore = {
-  site: 'site1', 
+  site: "site1",
   response: {
-  status: 'succeeded',
-  data: { date: '2023-03-01', responseDetails: [
-      {
-        "patId": "NeoM-M1-01",
-        "organoidId": "NeoM-M01-t1-T0",
-        "therapy": true,
-        "therapyType": "epigenetic editing"      
-      }  
-    ]},
-  }
+    status: "succeeded",
+    data: {
+      date: "2023-03-01",
+      responseDetails: [
+        {
+          project: "NeoMatch",
+          patId: "NeoM-M1-01",
+          organoidId: "NeoM-M01-t1-T0",
+          localisationPt: "Pancreas",
+          classificationPt: "T2N1M0",
+          sampleType: "Biopsy",
+          therapyPt: true,
+          therapyTypePt: "FOLFIRINOX",
+          therapyM: false,
+          typeTherapyM: "",
+        },
+      ],
+    },
+  },
 };
-updateTable(exampleParsedResponse);
 
 const exampleParsedResponse2: ResponseStore = {
-  site: 'site2', 
+  site: "site2",
   response: {
-  status: 'succeeded',
-  data: { date: '2023-03-01', responseDetails: [
-      {
-        "patId": "NeoM-F1-02",
-        "organoidId": "NeoM-F01-t1-T0",
+    status: "succeeded",
+    data: {
+      date: "2023-03-01",
+      responseDetails: [
+        /*
+    {        
+        "project": "MetPredict",
+        "patId": "M3tIg31-F1-02",
+        "organoidId": "M3tIg31-F01-t1-T0",
         "therapy": true,
         "therapyType": "genetic editing"      
       }  
-    ]},
-  }
+    */
+        {
+          project: "MetPredict",
+          patId: "M3tIg31-F1-02",
+          organoidId: "M3tIg31-F1-02-T0",
+          localisationPt: "Liver",
+          classificationPt: "T4N1M1",
+          sampleType: "Biopsy",
+          therapyPt: true,
+          therapyTypePt: "RCTx",
+          therapyM: false,
+          typeTherapyM: "",
+        },
+      ],
+    },
+  },
 };
-updateTable(exampleParsedResponse2);
+
+window.addEventListener("load", () => {
+  updateTable(exampleParsedResponse);
+  updateTable(exampleParsedResponse2);
+});

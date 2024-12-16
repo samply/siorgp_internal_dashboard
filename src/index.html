@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />    
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="images/favicon-dktk.png">
     <link rel="stylesheet" href="ccp.css">
     <link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet"/>
     <script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
@@ -22,9 +23,20 @@
               />
           </div>
       </div>
-  </header>
-  <main>    
+    </header>
+  <main>
+    <div id="site-status-wrapper">
+        Dresden: Processing <br>
+        Frankfurt: Offline <br>
+        München-TUM: Processing <br>
+        München-LMU: Processing <br>
+        <button id="rerun-query-button">
+            Refresh data
+        </button>
+    </div>
+
     <div class="table-wrapper">
+        <h2>Organoid Details</h2>
         <div id="table" class="result-table"></div>
     </div>                            
   </main>
@@ -40,8 +52,8 @@
       <a
           href="https://dktk.dkfz.de/forschung/Plattformen-und-Technologie-Netzwerke/klinische-plattformen/ccp-faq"
           class="faq"
-          target="_blank">FAQ</a
-      >
+          target="_blank">FAQ
+        </a>
       <a class="ccp" href="https://dktk.dkfz.de/ccp" target="_blank">
           Clinical Communication Platform (CCP)
       </a>

@@ -7,7 +7,18 @@ export type ResponseStatus = "claimed" | "succeeded" | "tempfailed" | "permfaile
 export type ResponseStore = {site: string, response: Response};
 export type Response = {status: ResponseStatus, data: ResponseBody};
 export type ResponseBody = {date: string, responseDetails: ResponseDetails};
-export type ResponseDetails = [{patId: string, organoidId: string, therapy: boolean, therapyType: string}]
+export type ResponseDetails = [{
+    project: string,
+    patId: string,
+    organoidId: string,
+    localisationPt: string,
+    classificationPt: string,
+    sampleType: string,    
+    therapyPt: boolean,
+    therapyTypePt: string,
+    therapyM: boolean,
+    typeTherapyM: string
+}]
 
 export type BeamResult = {
     body: string;
@@ -46,7 +57,7 @@ export class Spot {
                         "Content-Type": "application/json",
                     },
                     //credentials: import.meta.env.PROD ? "include" : "omit",
-                    credentials: process.env.NODE_ENV === 'production' ? "include" : "omit",
+                    credentials: process.env.PROD ? "include" : "omit",
                     body: JSON.stringify({
                         id: this.currentTask,
                         sites: this.sites,
