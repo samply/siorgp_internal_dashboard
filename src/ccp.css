@@ -1,11 +1,7 @@
-/*comment in for npm package usage*/
-/* @import "../../../node_modules/@samply/lens/dist/style.css"; */
-/* @import "../../lib/src/styles/index.css"; */
-
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
-  src: url('../fonts/Open_Sans/OpenSans-VariableFont_wdth\,wght.ttf') format('truetype');
+  src: url('fonts/Open_Sans/OpenSans-VariableFont_wdth\,wght.ttf') format('truetype');
 }
 
 :root {
@@ -178,19 +174,20 @@ h2 {
 footer {
   display: flex;
   justify-content: center;
-  padding: var(--gap-s);
+  padding: var(--gap-xs);
   background-color: var(--white);
   border-radius: var(--border-radius-small);
   border: solid 1px var(--lightest-gray);
-  margin: 0 var(--gap-xs);
+  margin: 0 var(--gap-xs)
 }
 
 footer a {
   color: var(--blue);
   padding: 0 var(--gap-xs);
   border-right: solid 1px var(--blue);
+
 }
 
-.imprint {
+.imprint, .email {
   border-right: none;
 }
